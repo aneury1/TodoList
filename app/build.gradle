@@ -31,9 +31,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures{
+
+    /*buildFeatures{
         viewBinding  true
-    }
+    }*/
 }
 
 dependencies {
@@ -54,6 +55,10 @@ dependencies {
     /// Adding delegation on view Models
     implementation "androidx.activity:activity-ktx:1.4.0"
 
+
+    ///Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     
 
 }

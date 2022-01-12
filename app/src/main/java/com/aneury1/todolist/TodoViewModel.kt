@@ -13,6 +13,8 @@ class TodoViewModel @Inject constructor(
 
     val liveData = MutableLiveData<String>("no data")
 
+    val todoList  = MutableLiveData<List<TodoModel>>(null)
+
     init{
       ///  liveData.postValue(dataset.CONSTANT)
     }

@@ -7,6 +7,7 @@ import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 import dagger.internal.SingleCheck
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -23,4 +24,13 @@ object AppModule{
     fun provideDataSession(): DataSession {
        return DataSession
     }
+
+    @Singleton
+    @Provides
+    @Named("retrofit")
+    fun provideRetrofit2(): Retrofit2{
+        return Retrofit2
+    }
+
+
 }
