@@ -2,6 +2,7 @@ package com.aneury1.todolist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -44,10 +45,24 @@ class MainActivity : AppCompatActivity() {
         return withContext(Dispatchers.IO){
             val retrofit = retrofit.getRetrofit2()
             val todo = retrofit.create(TodoEndpoint::class.java)
+
             val response : Response<List<TodoModel>> = todo.getAllTodo()
-            response.body()?: emptyList()
+            if(response.isSuccessful)
+                response.body()?: emptyList()
+            else
+                emptyList()
         }
     }
+
+    suspend fun getAnyJoke(): Joke{
+        return withContext(Dispatchers.IO){
+            val retrofit = retrofit.getRetrofit2()
+            val response: Response<Joke> = retrofit.create(TodoEndpoint::class.java).getOneJoke()
+            val value:Joke = response.body()!!
+            value
+        }
+    }
+
 
 //java.lang.IllegalArgumentException: Unable to create call adapter for retrofit2.Response<java.util.List<com.aneury1.todolist.TodoModel>>
 //        for method TodoEndpoint.getAllTodo
@@ -68,10 +83,23 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.add).setOnClickListener{
 
            ///todo check with CoroutineScope()
-            GlobalScope.launch(Dispatchers.Main){
+           CoroutineScope(Dispatchers.IO).launch {
+               val todos = getAnyJoke()///getTodos()
+               if(todos!=null){
+                 Log.d("JOKE", "is not null ${todos.joke}")
+               /// Toast.makeText(this, "Is not null??", Toast.LENGTH_SHORT).show()
+               }
+               else
+                   Log.d("JOKE", "is null as always")
+
+
+               /// todoViewModel.todoList.postValue(todos)
+           }
+
+            /*GlobalScope.launch(Dispatchers.Main){
                val todos = getTodos()
                 todoViewModel.todoList.postValue(todos)
-            }
+            }*/
         }
 
    /*
